@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>flatona Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 100px; }
+    .auth-box { border: 1px solid #ccc; padding: 20px; display: inline-block; border-radius: 10px; }
+    input { display: block; margin: 10px auto; padding: 5px; }
+    button { margin: 5px; }
+  </style>
+</head>
+<body>
+    <div class="text-center my-2">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="flatona Logo" class="app-logo">
+    </div>
+
+  <div class="auth-box">
+    <h3>Login oder Registrierung</h3>
+    <input id="username" type="text" placeholder="Username">
+    <input id="password" type="password" placeholder="Passwort">
+    <button onclick="register()">Registrieren</button>
+    <button onclick="login()">Login</button>
+    <p id="auth-status"></p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function register() {
+      $.post({
+        url: "/register",
+        contentType: "application/json",
+        data: JSON.stringify({username: $("#username").val(), password: $("#password").val()}),
+        success: function(res) {
+          $("#auth-status").text("Registrierung erfolgreich! Bitte einloggen.");
+        },
+        error: function(err) {
+          $("#auth-status").text("Fehler: Benutzer existiert schon?");
+        }
+      });
+    }
+
+    function login() {
+      $.post({
+        url: "/login",
+        contentType: "application/json",
+        data: JSON.stringify({username: $("#username").val(), password: $("#password").val()}),
+        success: function(res) {
+          window.location.href = "/"; // nach Login zum Kalender
+        },
+        error: function(err) {
+          $("#auth-status").text("Login fehlgeschlagen.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Profil - flatona{% endblock %}
+
+{% block content %}
+<div class="container my-4 text-center">
+  <h2>Moin {{ username }} 👋</h2>
+  
+  <div class="mt-4">
+    <button id="logout-btn" class="btn btn-danger btn-lg">Logout</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById("logout-btn").addEventListener("click", function() {
+  fetch("/logout")
+    .then(() => window.location.href = "/login")
+    .catch(err => console.error("Logout fehlgeschlagen", err));
+});
+</script>
+{% endblock %}

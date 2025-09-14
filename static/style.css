@@ -1,0 +1,188 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+  }
+
+.app-logo {
+  max-width: 200px;   /* passt sich an, wird nie breiter */
+  height: auto;       /* behält Proportionen */
+}
+
+  #calendar-container {
+  height: 75vh;
+  display: flex; /* Flexbox verwenden */
+  flex-direction: column;     /* kein Scroll im Container */
+}
+  #calendar {
+  flex-grow: 1; 
+  }
+  
+/* Kalender-Tage */
+.fc .fc-daygrid-day-number{
+    color: #000 !important;       /* Schwarz statt Blau */
+    text-decoration: none !important; /* Unterstreichung entfernen */
+}
+
+/* Week number am linken Rand, volle Höhe */
+.fc .fc-daygrid-week-number {
+    display: flex;
+    position: absolute;
+    bottom: 0px;   /* Abstand vom unteren Rand */
+    left: ßpx;
+    text-decoration: none;       /* Unterstrich entfernen */
+    color: black; 
+}
+
+
+.fc .fc-event-title {
+    color: #fff !important;       
+    text-decoration: none !important; /* Unterstreichung entfernen */
+}
+
+/* Wochentage fett und schwarz */
+.fc .fc-col-header-cell-cushion {
+    color: #000;
+    font-weight: bold;
+    text-decoration: none !important; /* Unterstreichung entfernen */
+}
+
+
+/* 1) DayGrid-Events dürfen mehrzeilig sein + nicht clippen */
+.fc .fc-daygrid-event { 
+  white-space: normal !important;
+}
+.fc .fc-daygrid-event .fc-event-main {
+  overflow: visible !important;
+}
+.fc .fc-daygrid-event-harness {
+  height: auto !important;  /* erlaubt variable Höhe */
+}
+
+/* 2) Dein Event-Inhalt sauber stapeln */
+.fc-event-custom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 6px 8px;
+  min-height: 40px;
+  box-sizing: border-box;
+}
+
+/* 3) Titel darf umbrechen */
+.fc-event-title {
+  display: block;
+  font-size: 0.9em;
+  word-break: break-word;
+  white-space: normal;
+  margin: 0;
+}
+
+/* 4) Personen NICHT absolut positionieren → Event wächst mit */
+.fc-event-person {
+  position: static;          /* wichtig */
+  font-size: 0.75em;
+  line-height: 1.2;
+  white-space: normal;
+  word-break: break-word;
+  /* kein bottom/right, kein max-width nötig */
+}
+
+
+
+
+
+
+
+.modal {
+  display: none; /* versteckt */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center; /* horizontal zentriert */
+  align-items: center;     /* vertikal zentriert */
+  background-color: rgba(0,0,0,0.5);
+  padding: 1rem;           /* Abstand zum Bildschirmrand */
+}
+
+.modal-content {
+  background-color: white;
+  width: 90%;              /* Mobil fast voll */
+  max-width: 500px;        /* Desktop-Begrenzung */
+  height: auto;            /* passt sich dem Inhalt an */
+  max-height: 90%;         /* Bildschirmbegrenzung */
+  overflow-y: auto;        /* scrollt bei großem Inhalt */
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+
+/* Modal-Formular */
+.modal-content form {
+  display: flex;
+  flex-direction: column;   /* alles untereinander */
+  gap: 0.75rem;             /* Abstand zwischen Elementen */
+  width: 80%;
+  box-sizing: border-box;
+}
+
+/* Inputs, Select, Buttons */
+.modal-content input,
+.modal-content select,
+.modal-content button {
+  width: 100%;              /* volle Breite */
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.bottom-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #000;
+  text-decoration: none;
+
+  width: 20vw;          /* Breite relativ zum Viewport */
+  /*max-width: 100px; */    /* optional: obere Begrenzung für große Screens */
+  /*min-width: 60px; */     /* optional: untere Begrenzung für kleine Screens */
+  height: 12vh;          /* Höhe relativ zur Viewport-Höhe */
+  text-align: center;
+}
+
+.bottom-nav .nav-item i {
+  font-size: 1.5rem;
+}
+
+.bottom-nav .nav-item.active {
+  color: #4a90e2;                  /* Text-/Icon-Farbe */
+  background-color: rgba(74,144,226,0.1); /* leichtes Blau als Box */
+  border-radius: 8px;              /* optional, abgerundete Ecken */
+}
