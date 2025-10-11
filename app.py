@@ -14,7 +14,6 @@ app.secret_key = os.getenv("SECRET_KEY")
 # DB-Config aus Environment
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 db = SQLAlchemy(app)
 
 # Datenbankmodell

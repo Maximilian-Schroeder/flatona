@@ -23,13 +23,8 @@
 {% block content %}
 
 
+<div class="container">
 
-    <div class="text-center my-1">
-      <button id="openFormBtn" class="btn btn-primary btn-lg">
-      Neuer Termin
-      </button>
-    </div>
-  </header>
   <!-- Formular zum Hinzufügen von Events -->
   <div id="eventModal" class="modal">
   <div class="modal-content">
@@ -63,6 +58,14 @@
   <div id='calendar-container'>
     <div id='calendar'></div>
   </div>
+
+      <div class="text-center my-1">
+      <button id="openFormBtn" class="btn btn-primary btn-lg">
+      Neuer Termin
+      </button>
+    </div>
+
+</div>
   {% endblock %}
 
   {% block scripts %}
@@ -86,16 +89,19 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       var calendarEl = document.getElementById('calendar');
+      const isMobile = window.innerWidth < 768;
 
       var calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: 'bootstrap5',
-        initialView: 'dayGridMonth',
+        //initialView: isMobile ? 'listWeek' : 'dayGridMonth',
         firstDay: 1, // Kalendar startet mit Montag
-        weekNumbers: true,       // Kalenderwochen einblenden
+        weekNumbers: false,       // Kalenderwochen einblenden
+        weekNumbersWithinDays: false, // wichtig: nicht innerhalb der Tageszellen
         allDay: true, // nur ganze Tagesevents, keine Uhrzeit
         events: '/events',
         expandRows: true,      // Zeilen werden gestreckt statt Scroll
         eventDisplay: 'block',   // ganztägige Events schöner darstellen
+        dayMaxEventRows: false, // damit Events umbrechen
         eventContent: function(arg) {
           // Container
           let outerDiv = document.createElement('div');
