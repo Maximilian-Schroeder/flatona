@@ -1,10 +1,11 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
-from datetime import datetime, timedelta
+from datetime import timedelta, datetime
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import calendar
 
 load_dotenv()
 
@@ -15,6 +16,34 @@ app.secret_key = os.getenv("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# Putzplan
+names = ["Jasmin", "Lea", "Max", "Satya"]
+base_tasks = ["Küche", "Müll", "Wohnzimmer + saugen", "frei :)"]
+months = ["Januar","Februar","März","April","Mai","Juni",
+          "Juli","August","September","Oktober","November","Dezember"]
+
+def rotate_tasks(base, offset):
+    offset = offset % len(base)
+    return base[-offset:] + base[:-offset]
+
+tasks_per_month = {month: rotate_tasks(base_tasks, i) for i, month in enumerate(months)}
+
+month_map = {
+    "January": "Januar",
+    "February": "Februar",
+    "March": "März",
+    "April": "April",
+    "May": "Mai",
+    "June": "Juni",
+    "July": "Juli",
+    "August": "August",
+    "September": "September",
+    "October": "Oktober",
+    "November": "November",
+    "December": "Dezember"
+}
+
 
 # Datenbankmodell
 class Event(db.Model):
@@ -130,7 +159,46 @@ def profile():
 
 @app.route("/cleaning")
 def cleaning():
-    return render_template("cleaning.html")
+    month_param = request.args.get("month")  # Optional: ?month=November
+    now = datetime.now()
+    year = now.year
+
+    month_map = {
+        "January": "Januar",
+        "February": "Februar",
+        "March": "März",
+        "April": "April",
+        "May": "Mai",
+        "June": "Juni",
+        "July": "Juli",
+        "August": "August",
+        "September": "September",
+        "October": "Oktober",
+        "November": "November",
+        "December": "Dezember"
+    }
+
+    if month_param in months:
+        current_month = month_param
+    else:
+        current_month_en = now.strftime("%B")
+        current_month = month_map.get(current_month_en, "Januar")  # Default Januar
+
+    tasks = tasks_per_month[current_month]
+
+    month_index = months.index(current_month)
+    prev_month = months[(month_index - 1) % 12]
+    next_month = months[(month_index + 1) % 12]
+
+    return render_template(
+        "cleaning.html",
+        names=names,
+        tasks=tasks,
+        current_month=current_month,
+        prev_month=prev_month,
+        next_month=next_month,
+        year=year
+    )
 
 @app.route("/polls")
 def polls():

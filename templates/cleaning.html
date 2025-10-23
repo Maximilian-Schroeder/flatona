@@ -1,9 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}Profil - flatona{% endblock %}
+{% block title %}Putzplan{% endblock %}
 
-{% block content %}
-<div class="container my-4 text-center">
-  <h2>Work in Progress...</h2>
-</div>
+
+{% block header %}
+<header class="page-header bg-light d-flex flex-column align-items-center justify-content-center py-2">
+  <div class="month-selector">
+    <a href="{{ url_for('cleaning', month=prev_month) }}"><button>⟨</button></a>
+    <span>{{ current_month }} {{ year }}</span>
+    <a href="{{ url_for('cleaning', month=next_month) }}"><button>⟩</button></a> 
+  </div>
+</header>
+{% endblock %}
+
+{% block main %}
+<main class="main">
+  <div class="tile-grid">
+      {% for i in range(4) %}
+      <div class="tile name-tile">{{ names[i] }}</div>
+      <div class="tile task-tile">{{ tasks[i] }}</div>
+      {% endfor %}
+  </div>
+</main>
+{% endblock %}
+
+
+{% block scripts %}
 {% endblock %}

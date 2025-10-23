@@ -10,36 +10,33 @@
   {% block head %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100">
+  {% block header %}
+  <header class="header bg-light border-bottom d-flex align-items-center justify-content-center">
+  </header>
+  {% endblock %}
 
-<!-- Hier Bottom Navbar -->
-<nav class="bottom-nav d-flex justify-content-around p-2">
+  {% block main %}
+  {% endblock %}
+
+  {% block footer %}
+  <footer class="footer bottom-nav d-flex justify-content-around p-2 border-top">
     <a href="{{ url_for('index') }}" class="nav-item {% if request.endpoint == 'index' %}active{% endif %}">
-        <i class="bi bi-calendar-date"></i>
-        <span>Kalender</span>
+      <i class="bi bi-calendar-date"></i><span>Kalender</span>
     </a>
     <a href="{{ url_for('todo') }}" class="nav-item {% if request.endpoint == 'todo' %}active{% endif %}">
-        <i class="bi bi-card-checklist"></i>
-        <span>To-Do's</span>
+      <i class="bi bi-card-checklist"></i><span>To-Do's</span>
     </a>
     <a href="{{ url_for('cleaning') }}" class="nav-item {% if request.endpoint == 'cleaning' %}active{% endif %}">
-        <i class="bi bi-repeat"></i>
-        <span>Putzplan</span>
+      <i class="bi bi-repeat"></i><span>Putzplan</span>
     </a>
     <a href="{{ url_for('polls') }}" class="nav-item {% if request.endpoint == 'polls' %}active{% endif %}">
-        <i class="bi bi-menu-up"></i>
-        <span>Umfragen</span>
+      <i class="bi bi-menu-up"></i><span>Umfragen</span>
     </a>
     <a href="{{ url_for('profile') }}" class="nav-item {% if request.endpoint == 'profile' %}active{% endif %}">
-        <i class="bi bi-person-circle"></i>
-        <span>Profil</span>
+      <i class="bi bi-person-circle"></i><span>Profil</span>
     </a>
-</nav>
-
-
-  <!-- Hauptinhalt -->
-  <div class="flex-grow-1">
-    {% block content %}{% endblock %}
-  </div>
+  </footer>
+  {% endblock %}
 
   {% block scripts %}{% endblock %}
 </body>

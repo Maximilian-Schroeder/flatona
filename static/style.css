@@ -26,6 +26,7 @@ body {
   align-items: center;
 }
 
+
 /* Login Flex-Drittel */
 .top, .middle, .bottom {
   width: 100%;
@@ -278,4 +279,109 @@ label { display:block; margin-bottom: 6px; font-weight:500; color:var(--muted); 
   .container { max-width: 720px; margin: 0 auto; }
   .btn { height: 44px; }
   .modal-content { max-width: 600px; height: auto; margin: 5vh auto; }
+}
+
+.month-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem; /* mehr Abstand zwischen Buttons und Text */
+    font-family: system-ui, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 400px;
+    user-select: none;
+}
+
+/* Buttons vergrößert und einheitlich */
+.month-selector button {
+    flex: 0 0 3rem;
+    height: 3rem;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.month-selector button:hover {
+    background: #e6e6e6;
+}
+
+.month-selector button:active {
+    transform: scale(0.95);
+}
+
+/* Monatsanzeige bleibt einzeilig und mittig */
+.month-selector span {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap; /* verhindert Zeilenumbruch */
+    min-width: 180px;
+}
+
+/* Mobile Optimierung */
+@media (max-width: 480px) {
+    .month-selector {
+        font-size: 1.4rem;
+        gap: 1.5rem;
+    }
+
+    .month-selector button {
+        flex: 0 0 2.8rem;
+        height: 2.8rem;
+        width: 3rem;
+        font-size: 1.4rem;
+    }
+
+    .month-selector span {
+        min-width: 150px;
+    }
+}
+
+.tile-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* mobile: 1 Spalte */
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.tile {
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    text-align: center;
+
+    /* Einheitliche Höhe */
+    height: 120px;          /* z.B. 120px, anpassen nach Bedarf */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* Textumbruch */
+    word-break: break-word;
+}
+
+
+@media (min-width: 300px) {
+    .tile-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 Spalten */
+    }
+}
+
+.main {
+    display: block;
+    width: 100%;
+    max-width: 100%; /* sichert volle Breite */
+    align-items: unset; /* falls vom body geerbt */
 }
